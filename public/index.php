@@ -35,7 +35,7 @@ $app->get('/students', function (Request $request, Response $response, $args) {
     $db->stopConnection($connect);
 
     $response->getBody()->write(json_encode($datas));
-    return $response;
+    return $response->withHeader('Content-type', 'application/json');;
 });
 
 // GET Specific Record Version
@@ -63,7 +63,7 @@ $app->get('/students/{studno}', function (Request $request, Response $response, 
     $db->stopConnection($connect);
 
     $response->getBody()->write(json_encode($datas));
-    return $response;
+    return $response->withHeader('Content-type', 'application/json');;
 });
 
 // POST
@@ -97,7 +97,7 @@ $app->post('/students/create', function (Request $request, Response $response, $
     $db->stopConnection($connect);
 
     $response->getBody()->write(json_encode($message));
-    return $response;
+    return $response->withHeader('Content-type', 'application/json');;
 });
 
 $app->put('/students/update/{studno}', function (Request $request, Response $response, $args) {
@@ -131,7 +131,7 @@ $app->put('/students/update/{studno}', function (Request $request, Response $res
     $db->stopConnection($connect);
 
     $response->getBody()->write(json_encode($message));
-    return $response;
+    return $response->withHeader('Content-type', 'application/json');;
 });
 
 // DELETE
@@ -160,12 +160,21 @@ $app->delete('/students/delete/{studno}', function (Request $request, Response $
     $db->stopConnection($connect);
 
     $response->getBody()->write(json_encode($message));
-    return $response;
+    return $response->withHeader('Content-type', 'application/json');
 });
 
 $app->get('/', function (Request $request, Response $response, $args) {
     $response->getBody()->write("Hello world!");
-    return $response;
+    return $response->withHeader('Content-type', 'application/json');
+});
+
+// Enable CORS
+$app->add(function ($request, $handler) {
+    $response = $handler->handle($request);
+    return $response
+            ->withHeader('Access-Control-Allow-Origin', '*')
+            ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
 });
 
 $app->run();
