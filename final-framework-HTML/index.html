@@ -145,7 +145,7 @@
         }
   
         function add_student() {
-            if(!(document.getElementById("name").value == "" && document.getElementById("address").value == "" && document.getElementById("course").value == "")){
+            if(document.getElementById("name").value != "" && document.getElementById("address").value != "" && document.getElementById("course").value != ""){
                 var data = {
                   name : document.getElementById("name").value,
                   address : document.getElementById("address").value,
@@ -168,7 +168,7 @@
                     })
             }
             else{
-                alert("Your Input are Empty");
+                alert("All Input are Required");
                 location.reload();
 
             }
